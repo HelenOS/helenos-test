@@ -42,17 +42,35 @@
 #include <typedefs.h>
 #include <console/chardev.h>
 
-#define IER_ERBFI  0x01  /** Enable Receive Buffer Full Interrupt. */
+#define NS156440_CLOCK    115200 /** Internal clock speed, max. baud rate. */
 
-#define LCR_DLAB   0x80  /** Divisor Latch Access bit. */
+#define IER_ERBFI         0x01   /** Enable Receive Buffer Full Interrupt. */
+#define MCR_OUT2          0x08   /** OUT2. */
 
-#define MCR_OUT2   0x08  /** OUT2. */
+#define LCR_DLAB          0x80   /** Divisor Latch Access bit. */
+#define LCR_SBE           0x40   /** RS-232 Break Signal bit. */
+
+#define LCR_PARITY_NONE   0x00   /** No parity bit. */
+#define LCR_PARITY_ODD    0x08   /** Odd parity. */
+#define LCR_PARITY_EVEN   0x18   /** Even parity. */
+#define LCR_PARITY_MARK   0x28   /** Parity bit always one. */
+#define LCR_PARITY_SPACE  0x38   /** Parity bit always zero. */
+
+#define LCR_STOP_BIT_ONE  0x00   /** One stop bit. */
+#define LCR_STOP_BIT_TWO  0x04   /** Two stop bits. */
+
+#define LCR_WORD_LEN_5    0x00   /** 5-bit word length. */
+#define LCR_WORD_LEN_6    0x01   /** 6-bit word length. */
+#define LCR_WORD_LEN_7    0x02   /** 7-bit word length. */
+#define LCR_WORD_LEN_8    0x03   /** 8-bit word length. */
 
 /** NS16550 registers. */
 typedef enum {
 	NS16550_REG_RBR = 0,  /**< Receiver Buffer Register (read). */
 	NS16550_REG_THR = 0,  /**< Transmitter Holder Register (write). */
+	NS16550_REG_DLL = 0,  /**< Baud rate divisor latch low byte (write). */
 	NS16550_REG_IER = 1,  /**< Interrupt Enable Register. */
+	NS16550_REG_DLH = 1,  /**< Baud rate divisor latch high byte (write). */
 	NS16550_REG_IIR = 2,  /**< Interrupt Ident Register (read). */
 	NS16550_REG_FCR = 2,  /**< FIFO control register (write). */
 	NS16550_REG_LCR = 3,  /**< Line Control register. */

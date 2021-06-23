@@ -131,6 +131,30 @@ static outdev_operations_t ns16550_ops = {
 	.redraw = NULL
 };
 
+/** Configure ns16550 transmission format.
+ *
+ * @param instance   NS 16550 driver instance.
+ * @param baud_rate  Transmission speed in bits per second, also known as baud,
+ *                   maximum value is 115200.
+ * @param lcr_format Line Control Register configuration bits, as defined by
+ *                   the @c LCR_ macros.  These configure the word width,
+ *                   parity type, and stop bit count.
+ */
+static void ns16550_format_set(ns16550_instance_t *instance,
+    unsigned baud_rate, uint8_t lcr_format)
+{
+	uint16_t divisor;
+
+	divisor = (uint16_t)(NS156440_CLOCK / baud_rate);
+	if (divisor == 0)
+		divisor = 1;  /* Avoid division by zero. */
+
+	ns16550_reg_write(instance, NS16550_REG_LCR, LCR_DLAB);
+	ns16550_reg_write(instance, NS16550_REG_DLL, divisor & 0xFF);
+	ns16550_reg_write(instance, NS16550_REG_DLH, (divisor >> 8) & 0xFF);
+	ns16550_reg_write(instance, NS16550_REG_LCR, lcr_format & ~LCR_DLAB);
+}
+
 /** Initialize ns16550.
  *
  * @param dev        Address of the beginning of the device in I/O space.
@@ -159,6 +183,9 @@ ns16550_instance_t *ns16550_init(ioport8_t *dev_phys, unsigned reg_shift,
 		instance->reg_shift = reg_shift;
 		instance->input = NULL;
 		instance->output = NULL;
+
+		ns16550_format_set(instance, 38400,
+		    LCR_PARITY_NONE | LCR_STOP_BIT_TWO | LCR_WORD_LEN_8);
 
 		if (output) {
 			instance->output = malloc(sizeof(outdev_t));

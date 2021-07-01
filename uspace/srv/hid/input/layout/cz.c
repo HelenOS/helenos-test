@@ -59,7 +59,8 @@ typedef struct {
 layout_ops_t cz_ops = {
 	.create = cz_create,
 	.destroy = cz_destroy,
-	.parse_ev = cz_parse_ev
+	.parse_ev = cz_parse_ev,
+	.name = "cz"
 };
 
 static char32_t map_lcase[] = {

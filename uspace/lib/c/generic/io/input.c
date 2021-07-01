@@ -41,6 +41,7 @@
 #include <io/input.h>
 #include <ipc/input.h>
 #include <stdlib.h>
+#include <str.h>
 
 static void input_cb_conn(ipc_call_t *icall, void *arg);
 
@@ -199,6 +200,77 @@ static void input_cb_conn(ipc_call_t *icall, void *arg)
 			async_answer_0(&call, ENOTSUP);
 		}
 	}
+}
+
+/**
+ * Retrieves the active keyboard layout
+ * @param sess Active session to the input server
+ * @param layout The name of the currently active layout,
+ *        needs to be freed by the caller
+ * @return EOK if sucessful or the corresponding error code.
+ *         If a failure occurs the param layout is already freed
+ */
+errno_t input_layout_get(async_sess_t *sess, char **layout)
+{
+	*layout = NULL;
+
+	async_exch_t *exch = async_exchange_begin(sess);
+
+	ipc_call_t answer;
+	aid_t req = async_send_0(exch, INPUT_GET_LAYOUT, &answer);
+
+	char layout_buf[INPUT_LAYOUT_NAME_MAXLEN + 1];
+	ipc_call_t dreply;
+	aid_t dreq = async_data_read(exch, layout_buf, INPUT_LAYOUT_NAME_MAXLEN,
+	    &dreply);
+
+	errno_t dretval;
+	async_wait_for(dreq, &dretval);
+
+	async_exchange_end(exch);
+
+	if (dretval != EOK) {
+		async_forget(req);
+		return dretval;
+	}
+
+	errno_t retval;
+	async_wait_for(req, &retval);
+
+	if (retval != EOK)
+		return retval;
+
+	size_t length = ipc_get_arg2(&dreply);
+	assert(length <= INPUT_LAYOUT_NAME_MAXLEN);
+	layout_buf[length] = '\0';
+
+	*layout = str_dup(layout_buf);
+	if (*layout == NULL)
+		return ENOMEM;
+
+	return EOK;
+}
+
+/**
+ * Changes the keyboard layout
+ * @param sess Active session to the input server
+ * @param layout The name of the layout which should be activated
+ * @return EOK if sucessful or the corresponding error code.
+ */
+errno_t input_layout_set(async_sess_t *sess, const char *layout)
+{
+	errno_t rc;
+	ipc_call_t call;
+	async_exch_t *exch = async_exchange_begin(sess);
+
+	aid_t mid = async_send_0(exch, INPUT_SET_LAYOUT, &call);
+	rc = async_data_write_start(exch, layout, str_size(layout));
+
+	if (rc == EOK)
+		async_wait_for(mid, &rc);
+
+	async_exchange_end(exch);
+	return rc;
 }
 
 /** @}

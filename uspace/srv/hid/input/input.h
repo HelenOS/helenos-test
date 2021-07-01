@@ -40,8 +40,9 @@
 
 #include <stdbool.h>
 #include <async.h>
+#include <ipc/services.h>
 
-#define NAME  "input"
+#define NAME SERVICE_NAME_HID_INPUT
 
 extern bool irc_service;
 extern async_sess_t *irc_sess;

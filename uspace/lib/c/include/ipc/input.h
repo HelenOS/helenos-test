@@ -37,8 +37,12 @@
 
 #include <ipc/common.h>
 
+static size_t const INPUT_LAYOUT_NAME_MAXLEN = 255;
+
 typedef enum {
-	INPUT_ACTIVATE = IPC_FIRST_USER_METHOD
+	INPUT_ACTIVATE = IPC_FIRST_USER_METHOD,
+	INPUT_SET_LAYOUT,
+	INPUT_GET_LAYOUT
 } input_request_t;
 
 typedef enum {

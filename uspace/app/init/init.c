@@ -49,6 +49,7 @@
 #include <io/logctl.h>
 #include <vfs/vfs.h>
 #include <vol.h>
+#include <ipc/services.h>
 #include "untar.h"
 #include "init.h"
 
@@ -69,7 +70,7 @@
 
 #define SRV_DISPLAY  "/srv/hid/display"
 
-#define HID_INPUT              "hid/input"
+#define HID_INPUT              SERVICE_NAME_HID_INPUT
 #define HID_OUTPUT             "hid/output"
 
 #define srv_start(path, ...) \

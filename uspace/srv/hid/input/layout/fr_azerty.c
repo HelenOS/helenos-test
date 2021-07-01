@@ -47,7 +47,8 @@ static char32_t fr_azerty_parse_ev (layout_t *, kbd_event_t *);
 layout_ops_t fr_azerty_ops = {
 	.create = fr_azerty_create,
 	.destroy = fr_azerty_destroy,
-	.parse_ev = fr_azerty_parse_ev
+	.parse_ev = fr_azerty_parse_ev,
+	.name = "fr_azerty"
 };
 
 static char32_t map_lcase[] = {

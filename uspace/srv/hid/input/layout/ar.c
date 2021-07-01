@@ -48,7 +48,8 @@ static char32_t ar_parse_ev(layout_t *, kbd_event_t *ev);
 layout_ops_t ar_ops = {
 	.create = ar_create,
 	.destroy = ar_destroy,
-	.parse_ev = ar_parse_ev
+	.parse_ev = ar_parse_ev,
+	.name = "ar"
 };
 
 static char32_t map_not_shifted[] = {

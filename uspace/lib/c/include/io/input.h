@@ -59,6 +59,8 @@ extern errno_t input_open(async_sess_t *, input_ev_ops_t *, void *, input_t **);
 extern void input_close(input_t *);
 extern errno_t input_activate(input_t *);
 
+extern errno_t input_layout_get(async_sess_t *sess, char **layout_name);
+extern errno_t input_layout_set(async_sess_t *sess, const char *layout_name);
 #endif
 
 /** @}

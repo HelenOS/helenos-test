@@ -47,7 +47,8 @@ static char32_t us_dvorak_parse_ev(layout_t *, kbd_event_t *ev);
 layout_ops_t us_dvorak_ops = {
 	.create = us_dvorak_create,
 	.destroy = us_dvorak_destroy,
-	.parse_ev = us_dvorak_parse_ev
+	.parse_ev = us_dvorak_parse_ev,
+	.name = "us_dvorak"
 };
 
 static char32_t map_lcase[] = {

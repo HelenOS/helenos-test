@@ -43,6 +43,10 @@ src = files(
 	'generic/cos.c',
 	'generic/sincos.c',
 	'generic/trunc.c',
+	'generic/pow.c',
+	'generic/scalbn.c',
+	'generic/sqrt.c',
+	'generic/log.c',
 )
 
 test_src = files(

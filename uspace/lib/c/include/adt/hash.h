@@ -110,4 +110,24 @@ static inline size_t hash_combine(size_t seed, size_t hash)
 	return seed;
 }
 
+/** Calculate hash of NULL-terminated string
+ *
+ * TODO Modify also same file in kernel subtree?
+ *
+ * @param[in]  str     NULL-terminated string
+ * @return hash of the given string
+ */
+static inline size_t hash_string(const char *str)
+{
+	size_t hash = 0;
+	if (str != NULL) {
+		char c;
+		while ((c = *str++) != 0) {
+			hash = hash_combine(hash, c);
+		}
+	}
+
+	return hash;
+}
+
 #endif

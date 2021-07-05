@@ -57,6 +57,7 @@ libs = [
 	'block',
 	'clui',
 	'compress',
+	'conf',
 	'cpp',
 	'crypto',
 	'dltest',

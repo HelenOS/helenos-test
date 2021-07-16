@@ -58,6 +58,7 @@ src = files(
 	'cmds/modules/touch/touch.c',
 	'cmds/modules/unalias/unalias.c',
 	'cmds/modules/unmount/unmount.c',
+	'cmds/modules/grep/grep.c',
 	'compl.c',
 	'errors.c',
 	'exec.c',

@@ -98,11 +98,11 @@ typedef struct {
 	size_t objects;  /**< Number of objects that fit in */
 
 	/* Statistics */
-	atomic_t allocated_slabs;
-	atomic_t allocated_objs;
-	atomic_t cached_objs;
+	atomic_size_t allocated_slabs;
+	atomic_size_t allocated_objs;
+	atomic_size_t cached_objs;
 	/** How many magazines in magazines list */
-	atomic_t magazine_counter;
+	atomic_size_t magazine_counter;
 
 	/* Slabs */
 	list_t full_slabs;     /**< List of full slabs */

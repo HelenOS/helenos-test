@@ -37,7 +37,7 @@
 
 #include <atomic.h>
 
-extern atomic_t haltstate;
+extern atomic_bool haltstate;
 
 extern void halt(void) __attribute__((noreturn));
 

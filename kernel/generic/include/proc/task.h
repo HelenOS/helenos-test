@@ -86,9 +86,9 @@ typedef struct task {
 	container_id_t container;
 
 	/** Number of references (i.e. threads). */
-	atomic_t refcount;
+	atomic_size_t refcount;
 	/** Number of threads that haven't exited yet. */
-	atomic_t lifecount;
+	atomic_size_t lifecount;
 
 	/** Task permissions. */
 	perm_t perms;

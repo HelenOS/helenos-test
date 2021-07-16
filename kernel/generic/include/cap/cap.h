@@ -79,7 +79,7 @@ extern kobject_ops_t *kobject_ops[];
  */
 typedef struct kobject {
 	kobject_type_t type;
-	atomic_t refcnt;
+	atomic_size_t refcnt;
 
 	/** Mutex protecting caps_list */
 	mutex_t caps_list_lock;

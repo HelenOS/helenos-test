@@ -53,7 +53,7 @@ typedef struct {
 	uint8_t strand_count;
 	uint64_t cpuids[MAX_CORE_STRANDS];
 	struct cpu *cpus[MAX_CORE_STRANDS];
-	atomic_t nrdy;
+	atomic_size_t nrdy;
 	SPINLOCK_DECLARE(proposed_nrdy_lock);
 } exec_unit_t;
 

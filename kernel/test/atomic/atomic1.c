@@ -31,7 +31,7 @@
 
 const char *test_atomic1(void)
 {
-	atomic_t a;
+	atomic_int a;
 
 	atomic_store(&a, 10);
 	if (atomic_load(&a) != 10)

@@ -42,8 +42,8 @@
 #define THREAD_RUNS  1
 #define THREADS      8
 
-static atomic_t thread_cnt;
-static atomic_t thread_fail;
+static atomic_size_t thread_cnt;
+static atomic_size_t thread_fail;
 
 static void falloc(void *arg)
 {

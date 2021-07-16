@@ -57,7 +57,7 @@ typedef struct cpu {
 
 	context_t saved_context;
 
-	atomic_t nrdy;
+	atomic_size_t nrdy;
 	runq_t rq[RQ_COUNT];
 	volatile size_t needs_relink;
 

@@ -29,14 +29,15 @@
 
 #include <test.h>
 #include <atomic.h>
+#include <stdbool.h>
 #include <proc/thread.h>
 
 #include <arch.h>
 
 #define THREADS  5
 
-static atomic_t finish;
-static atomic_t threads_finished;
+static atomic_bool finish;
+static atomic_size_t threads_finished;
 
 static void threadtest(void *data)
 {
@@ -54,7 +55,7 @@ const char *test_thread1(void)
 	unsigned int i;
 	size_t total = 0;
 
-	atomic_store(&finish, 1);
+	atomic_store(&finish, true);
 	atomic_store(&threads_finished, 0);
 
 	for (i = 0; i < THREADS; i++) {
@@ -71,7 +72,7 @@ const char *test_thread1(void)
 	TPRINTF("Running threads for 10 seconds...\n");
 	thread_sleep(10);
 
-	atomic_store(&finish, 0);
+	atomic_store(&finish, false);
 	while (atomic_load(&threads_finished) < total) {
 		TPRINTF("Threads left: %zu\n", total - atomic_load(&threads_finished));
 		thread_sleep(1);

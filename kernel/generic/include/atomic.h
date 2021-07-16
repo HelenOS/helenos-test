@@ -39,15 +39,6 @@
 #include <typedefs.h>
 #include <stdatomic.h>
 
-// TODO: Remove.
-// Before <stdatomic.h> was available, there was only one atomic type
-// equivalent to atomic_size_t. This means that in some places, atomic_t can
-// be replaced with a more appropriate type (e.g. atomic_bool for flags or
-// a signed type for potentially signed values).
-// So atomic_t should be replaced with the most appropriate type on a case by
-// case basis, and after there are no more uses, remove this type.
-typedef atomic_size_t atomic_t;
-
 #define atomic_predec(val) \
 	(atomic_fetch_sub((val), 1) - 1)
 

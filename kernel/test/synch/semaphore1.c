@@ -40,8 +40,8 @@
 static semaphore_t sem;
 
 static waitq_t can_start;
-static atomic_t items_produced;
-static atomic_t items_consumed;
+static atomic_size_t items_produced;
+static atomic_size_t items_consumed;
 
 static void producer(void *arg)
 {

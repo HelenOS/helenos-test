@@ -70,7 +70,7 @@ typedef struct phone {
 	/* A call prepared for hangup ahead of time, so that it cannot fail. */
 	struct call *hangup_call;
 	ipc_phone_state_t state;
-	atomic_t active_calls;
+	atomic_size_t active_calls;
 	/** User-defined label */
 	sysarg_t label;
 	kobject_t *kobject;
@@ -89,7 +89,7 @@ typedef struct answerbox {
 	/**
 	 * Number of answers the answerbox is expecting to eventually arrive.
 	 */
-	atomic_t active_calls;
+	atomic_size_t active_calls;
 
 	/** Phones connected to this answerbox. */
 	list_t connected_phones;

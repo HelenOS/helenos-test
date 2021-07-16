@@ -35,6 +35,7 @@
  * @brief Halt function.
  */
 
+#include <stdbool.h>
 #include <halt.h>
 #include <log.h>
 #include <cpu.h>
@@ -43,7 +44,7 @@
 #include <console/kconsole.h>
 
 /** Halt flag */
-atomic_t haltstate = 0;
+atomic_bool haltstate = false;
 
 /** Halt wrapper
  *
@@ -56,11 +57,11 @@ void halt(void)
 	bool rundebugger = false;
 
 	if (!atomic_load(&haltstate)) {
-		atomic_store(&haltstate, 1);
+		atomic_store(&haltstate, true);
 		rundebugger = true;
 	}
 #else
-	atomic_store(&haltstate, 1);
+	atomic_store(&haltstate, true);
 #endif
 
 	interrupts_disable();

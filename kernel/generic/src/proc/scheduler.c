@@ -67,7 +67,7 @@
 
 static void scheduler_separated_stack(void);
 
-atomic_t nrdy;  /**< Number of ready threads in the system. */
+atomic_size_t nrdy;  /**< Number of ready threads in the system. */
 
 /** Carry out actions before new task runs. */
 static void before_task_runs(void)

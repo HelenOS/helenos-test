@@ -51,7 +51,7 @@ typedef struct {
 	size_t n;			/**< Number of threads in rq_ready. */
 } runq_t;
 
-extern atomic_t nrdy;
+extern atomic_size_t nrdy;
 extern void scheduler_init(void);
 
 extern void scheduler_fpu_lazy_request(void);

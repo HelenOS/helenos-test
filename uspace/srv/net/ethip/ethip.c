@@ -174,7 +174,7 @@ static errno_t ethip_send(iplink_srv_t *srv, iplink_sdu_t *sdu)
 	log_msg(LOG_DEFAULT, LVL_DEBUG, "ethip_send()");
 
 	ethip_nic_t *nic = (ethip_nic_t *) srv->arg;
-	eth_frame_t frame;
+	eth_frame_t frame = { 0 };
 
 	errno_t rc = arp_translate(nic, sdu->src, sdu->dest, frame.dest);
 	if (rc != EOK) {
